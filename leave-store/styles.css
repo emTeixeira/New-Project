@@ -1,0 +1,420 @@
+/* RESET GLOBAL: Garantindo que todos os elementos tenham o mesmo comportamento base em todos os navegadores */
+* {
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; /* Incluindo o padding e border dentro da largura e altura para evitar problemas de layout */
+    list-style: none; /* Removendo o estilo de lista padrão */
+    font-family: "Montserrat", sans-serif; /* Usando uma fonte sans-serif moderna para a legibilidade */
+}
+
+/* Definição de variáveis globais para cores, facilitando manutenção e consistência de design */
+:root {
+    --background: #0f0f1e;
+    --backgroundGradient: #1f1f3a;
+    --backgroundCircle: rgba(15, 15, 30, 0);
+    --logoShadow: rgba(0, 247, 255, 0.5);
+    --dropShadow: rgba(0, 247, 255, 0.3);
+    --box-shadow: rgba(111, 221, 208, 0.2);
+    --logo: #00f7ff;
+    --description: #b8b8d0;
+    --gradient: #0066ff;
+    --arrow: rgba(255, 255, 255, 0.1);
+    --arrowBorder: rgba(0, 247, 255, 0.3);
+    --arrowHover: rgba(0, 247, 255, 0.1);
+    --numbers: rgba(255, 255, 255, 0.2);
+}
+
+/* Corpo da página com estilo de fundo escuro e texto claro */
+body {
+    background-color: var(--fundo); /* Usando variável para facilitar mudanças no fundo */
+    color: #fff; /* Garantindo contraste alto para legibilidade */
+    font-size: 16px;
+    overflow: hidden; /* Impedindo rolagem indesejada */
+}
+
+/* Estilo do header fixo que se sobrepõe ao conteúdo */
+header {
+    position: fixed; /* Fixa o header no topo da tela */
+    width: 90vw; /* Largura de 90% da tela para criar uma borda de espaçamento */
+    top: 0;
+    padding: 20px 60px;
+    display: flex; /* Flexbox para layout responsivo */
+    justify-content: space-between; /* Espaço entre logo e navegação */
+    align-items: center; /* Centralizando verticalmente o conteúdo */
+    z-index: 3; /* Garantindo que o header fique acima de outros conteúdos */
+}
+
+/* Estilo do logo com sombra para dar destaque */
+.logo {
+    font-family: "Orbitron", sans-serif; /* Fonte futurista para o logo */
+    font-size: 2rem;
+    font-weight: 900; /* Peso de fonte mais alto para dar destaque */
+    color: var(--logo); /* Cor definida na variável */
+    text-shadow: 0 0 10px var(--logoShadow); /* Efeito de sombra ao redor do logo */
+}
+
+/* Estilo da lista de navegação com espaçamento entre os itens */
+header nav ul {
+    display: flex; /* Usando flexbox para a navegação */
+    gap: 48px; /* Espaçamento fixo entre os itens */
+}
+
+/* Estilo dos itens de navegação */
+header nav ul li {
+    cursor: pointer; /* Mudando o cursor para indicar interatividade */
+    position: relative;
+    padding: 5px 0;
+    transition: color 0.3s ease; /* Suavizando a transição de cor ao passar o mouse */
+}
+
+/* Estilo de hover nos itens de navegação */
+header nav ul li:hover {
+    color: #727272; /* Mudando a cor do item ao passar o mouse */
+}
+
+/* Contêiner principal com gradiente de fundo */
+.container {
+    height: 100vh; /* Ocupa toda a altura da tela */
+    position: relative;
+    background: linear-gradient(135deg, var(--background) 50%, var(--backgroundGradient) 110%);
+    overflow: hidden; /* Impedindo elementos fora da área visível */
+}
+
+/* Efeito visual decorativo no fundo com círculo pulsante */
+.container::before {
+    content: ''; /* Criando um pseudo-elemento */
+    position: absolute;
+    width: 500px; /* Tamanho do círculo */
+    height: 500px;
+    border-radius: 50%; /* Transformando o elemento em círculo */
+    background: radial-gradient(circle, var(--logoShadow) 0%, var(--backgroundCircle) 70%); /* Efeito de gradiente radial */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Centralizando o círculo */
+    filter: blur(70px); /* Desfoque para dar um efeito de fundo suave */
+    z-index: 1; /* Colocando atrás dos elementos principais */
+    animation: pulse 4s infinite alternate; /* Animando o efeito de pulsação */
+}
+
+/* Animação de pulsação, que faz o círculo crescer e diminuir */
+@keyframes pulse {
+    0% {
+        opacity: 0.5; /* Começa com opacidade baixa */
+        transform: translate(-50%, -50%) scale(0.8); /* Inicia com escala reduzida */
+    }
+    100% {
+        opacity: 1; /* Aumenta a opacidade */
+        transform: translate(-50%, -50%) scale(1.5); /* Aumenta a escala do círculo */
+    }
+}
+
+/* Estilo para o carrossel de itens, centralizando o conteúdo */
+.list {
+    width: 80%; /* O carrossel ocupa 80% da largura da tela */
+    height: 100%; /* Ocupa toda a altura da tela */
+    margin: 0 auto;
+    position: relative;
+}
+
+/* Estilo de cada item do carrossel, que começa invisível e fora da tela */
+.item {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0; /* Começa invisível */
+    transform: translateX(100vw); /* Começa fora da tela */
+    transition: transform 0.7s ease-in-out, opacity 0.7s ease-in-out; /* Transição suave de entrada */
+}
+
+/* Classe .active faz o item aparecer e entrar na tela */
+.active {
+    opacity: 1; /* Torna o item visível */
+    transform: translateX(0vw); /* Coloca o item de volta na tela */
+}
+
+/* Estilo da imagem do produto, garantindo que ela se ajuste bem ao layout */
+.product-img {
+    width: 45%; /* A imagem ocupa 45% da largura do container */
+    height: 100%; /* A altura da imagem ocupa 100% da altura do container */
+    display: flex; /* Utilizando flexbox para alinhamento */
+    justify-content: center; /* Centralizando horizontalmente a imagem */
+    align-items: center; /* Centralizando verticalmente a imagem */
+    position: relative; /* Permitindo a sobreposição de outros elementos */
+    z-index: 2; /* Colocando a imagem acima de elementos com z-index menor */
+}
+
+/* Estilo da imagem dentro do .product-img com animação e efeitos visuais */
+.product-img img {
+    max-width: 80%; /* Limitando a largura da imagem a 80% do container */
+    max-height: 60%; /* Limitando a altura da imagem a 60% do container */
+    filter: drop-shadow(0 0 30px var(--dropShadow)); /* Adicionando uma sombra à imagem para destacá-la */
+
+    /* ANIMAÇÃO */
+    transform: translateX(400px); /* Inicia a animação movendo a imagem para a direita */
+    transition: transform 0.6s ease, opacity 0.6s ease; /* Suavizando a animação de movimento e opacidade */
+    transition-delay: 0.5s; /* Atrasando o início da animação */
+    opacity: 0; /* Começando com a imagem invisível */
+}
+
+/* Quando a classe .active é adicionada, a imagem se move para a posição original e se torna visível */
+.active .product-img img {
+    transform: translateX(0); /* Colocando a imagem de volta na posição original */
+    opacity: 1; /* Tornando a imagem totalmente visível */
+}
+
+/* Estilo do conteúdo ao lado da imagem, com layout flexível */
+.content {
+    width: 55%; /* O conteúdo ocupa 55% da largura */
+    padding-right: 80px; /* Espaçamento à direita do conteúdo */
+    display: flex; /* Flexbox para centralização dos itens */
+    align-items: flex-start; /* Alinhando o conteúdo ao topo */
+    justify-content: center; /* Centralizando horizontalmente */
+    z-index: 2; /* Garantindo que o conteúdo esteja acima de outros elementos */
+    flex-direction: column; /* Organizando os elementos dentro do container de forma vertical */
+}
+
+/* Estilo da tag do produto, que é uma pequena descrição do produto */
+.product-tag {
+    font-size: 1rem; /* Definindo o tamanho da fonte */
+    text-transform: uppercase; /* Transformando o texto para letras maiúsculas */
+    color: var(--logo); /* Cor da tag definida pela variável de logo */
+    font-weight: 600; /* Peso da fonte para destacar a tag */
+    letter-spacing: 2px; /* Aumentando o espaçamento entre as letras */
+    margin-bottom: 10px; /* Espaçamento abaixo da tag */
+
+    /* ANIMAÇÃO */
+    transform: translateX(400px); /* Inicia a animação movendo a tag para a direita */
+    transition: transform 0.6s ease, opacity 0.6s ease; /* Suavizando a animação de entrada */
+    transition-delay: 0.5s; /* Atrasando o início da animação */
+    opacity: 0; /* Começando com a tag invisível */
+}
+
+/* Quando a classe .active é adicionada, a tag do produto se move para a posição original e se torna visível */
+.active .product-tag {
+    transform: translateX(0); /* Movendo a tag de volta para a posição original */
+    opacity: 1; /* Tornando a tag visível */
+}
+
+/* Estilo para o nome do produto, com uma fonte grande e destacada */
+.product-name {
+    font-size: 4.5rem; /* Aumentando o tamanho da fonte para destaque */
+    font-family: "Orbitron", sans-serif; /* Fonte futurista para o nome do produto */
+    line-height: 1.1; /* Ajustando o espaçamento entre as linhas */
+    margin-bottom: 20px; /* Espaçamento abaixo do nome do produto */
+
+    /* ANIMAÇÃO */
+    transform: translateX(400px); /* Inicia a animação movendo o nome para a direita */
+    transition: transform 0.7s ease, opacity 0.7s ease; /* Suavizando a animação de movimento e opacidade */
+    transition-delay: 0.5s; /* Atrasando o início da animação */
+    opacity: 0; /* Começando com o nome invisível */
+}
+
+/* Quando a classe .active é adicionada, o nome do produto se move para a posição original e se torna visível */
+.active .product-name {
+    transform: translateX(0); /* Movendo o nome de volta para a posição original */
+    opacity: 1; /* Tornando o nome visível */
+}
+
+/* Estilo da descrição do produto, com fonte menor para texto explicativo */
+.description {
+    font-size: 1.1rem; /* Tamanho de fonte moderado */
+    color: var(--description); /* Cor da descrição definida pela variável */
+    line-height: 1.6; /* Aumentando o espaçamento entre as linhas para legibilidade */
+    margin-bottom: 30px; /* Espaçamento abaixo da descrição */
+    max-width: 600px; /* Definindo um limite de largura para a descrição */
+
+    /* ANIMAÇÃO */
+    transform: translateX(400px); /* Inicia a animação movendo a descrição para a direita */
+    transition: transform 0.8s ease, opacity 0.8s ease; /* Suavizando a animação de movimento e opacidade */
+    transition-delay: 0.5s; /* Atrasando o início da animação */
+    opacity: 0; /* Começando com a descrição invisível */
+}
+
+/* Quando a classe .active é adicionada, a descrição se move para a posição original e se torna visível */
+.active .description {
+    transform: translateX(0); /* Movendo a descrição de volta para a posição original */
+    opacity: 1; /* Tornando a descrição visível */
+}
+
+/* Estilo do botão com gradiente e animação */
+.btn {
+    padding: 12px 16px; /* Tamanho do botão */
+    background: linear-gradient(90deg, var(--logo), var(--gradient)); /* Gradiente de fundo */
+    border-radius: 30px; /* Bordas arredondadas para um design mais suave */
+    border: none; /* Removendo a borda padrão */
+    color: #000; /* Cor do texto */
+    font-size: 1rem; /* Tamanho da fonte do botão */
+    font-weight: 600; /* Peso da fonte para destacar o texto */
+    cursor: pointer; /* Mudando o cursor para indicar que o botão é clicável */
+    transition: color 0.3s ease; /* Suavizando a transição de cor do texto ao passar o mouse */
+
+    /* ANIMAÇÃO */
+    transform: translateX(400px); /* Inicia a animação movendo o botão para a direita */
+    transition: transform 0.9s ease, opacity 0.9s ease; /* Suavizando a animação de movimento e opacidade */
+    transition-delay: 0.5s; /* Atrasando o início da animação */
+    opacity: 0; /* Começando com o botão invisível */
+}
+
+/* Quando a classe .active é adicionada, o botão se move para a posição original e se torna visível */
+.active .btn {
+    transform: translateX(0); /* Movendo o botão de volta para a posição original */
+    opacity: 1; /* Tornando o botão visível */
+}
+
+/* Estilo de hover para o botão, mudando a cor do texto */
+.btn:hover {
+    color: #fff; /* Mudando a cor do texto para branco quando o botão é focado */
+}
+
+/* Contêiner para as setas de navegação */
+.arrows {
+    width: 90%; /* A largura do contêiner é 90% da tela */
+    display: flex; /* Flexbox para alocar as setas lado a lado */
+    justify-content: space-between; /* Espaçamento entre as setas de navegação */
+    position: absolute; /* Posicionamento absoluto para que as setas fiquem fixas na tela */
+    top: 50%; /* Posicionando verticalmente no centro da tela */
+    left: 50%; /* Posicionando horizontalmente no centro da tela */
+    transform: translate(-50%, -50%); /* Centralizando a área do contêiner com base no seu centro */
+    z-index: 5; /* Definindo um nível de camada superior para garantir que as setas fiquem visíveis */
+}
+
+/* Estilo para o botão de seta */
+.arrow-btn {
+    width: 50px; /* Largura do botão da seta */
+    height: 50px; /* Altura do botão da seta */
+    display: flex; /* Usando flexbox para alinhar o ícone dentro do botão */
+    align-items: center; /* Alinhamento centralizado verticalmente */
+    justify-content: center; /* Alinhamento centralizado horizontalmente */
+    border-radius: 50%; /* Tornando o botão circular */
+    cursor: pointer; /* Mudando o cursor para indicar que o botão é clicável */
+    background-color: var(--arrow); /* Cor de fundo da seta, utilizando variável */
+    border: 1px solid var(--arrowBorder); /* Definindo a borda do botão com cor personalizada */
+}
+
+/* Estilo de hover para o botão da seta */
+.arrow-btn:hover {
+    background-color: var(--arrowHover); /* Alterando a cor de fundo ao passar o mouse */
+    border-color: var(--logo); /* Mudando a cor da borda ao passar o mouse */
+}
+
+/* Estilo para o ícone dentro do botão da seta */
+.arrow-btn svg {
+    width: 24px; /* Largura do ícone SVG */
+    height: 24px; /* Altura do ícone SVG */
+}
+
+/* Indicadores (ex: números ou pontos) no rodapé */
+.indicators {
+    position: absolute; /* Posicionamento absoluto para que os indicadores fiquem fixos na tela */
+    bottom: 40px; /* Distância de 40px do fundo da tela */
+    left: 50%; /* Posicionando no centro horizontalmente */
+    transform: translateX(-50%); /* Centralizando o contêiner de indicadores */
+    display: flex; /* Flexbox para alinhar os indicadores */
+    flex-direction: column; /* Alinhando os indicadores na vertical */
+    align-items: center; /* Centralizando os itens */
+    gap: 15px; /* Espaçamento entre os indicadores */
+    z-index: 5; /* Garantindo que os indicadores fiquem acima de outros elementos */
+}
+
+/* Estilo para os números exibidos no indicador */
+.numbers {
+    font-family: "Orbitron", sans-serif; /* Fonte futurista para os números */
+    font-size: 3rem; /* Tamanho grande para os números */
+    font-weight: 800; /* Peso da fonte para destacar o número */
+    color: var(--numbers); /* Cor do número, utilizando variável */
+}
+
+/* Estilo para os pontos de navegação indicativos */
+.dots {
+    display: flex; /* Flexbox para alinhar os pontos horizontalmente */
+    gap: 10px; /* Espaçamento entre os pontos */
+}
+
+/* Estilo para cada ponto individual */
+.dot {
+    width: 40px; /* Largura do ponto */
+    height: 4px; /* Altura do ponto */
+    background-color: var(--numbers); /* Cor do ponto */
+    border-radius: 2px; /* Bordas arredondadas para o ponto */
+}
+
+/* Estilo do ponto ativo, quando ele está sendo selecionado */
+.dot.active {
+    background-color: var(--logo); /* Mudando a cor para o logo quando o ponto está ativo */
+    box-shadow: var(--logoShadow); /* Adicionando uma sombra ao ponto ativo para destacá-lo */
+}
+
+/* Forma geométrica de fundo que envolve as animações */
+.tech-shape {
+    position: absolute; /* Posicionamento absoluto para cobrir toda a tela */
+    top: 0; /* Iniciando no topo da tela */
+    left: 0; /* Iniciando à esquerda da tela */
+    width: 100%; /* Cobrir toda a largura da tela */
+    height: 100%; /* Cobrir toda a altura da tela */
+    overflow: hidden; /* Escondendo o conteúdo que ultrapassar o limite da tela */
+}
+
+/* Forma geométrica com borda e rotação */
+.shape {
+    position: absolute; /* Posicionamento absoluto das formas no fundo */
+    border: 1px solid var(--arrowBorder); /* Borda com cor definida pela variável */
+    transform: rotate(45deg); /* Rotacionando a forma em 45 graus */
+}
+
+/* Estilo para a primeira forma geométrica */
+.shape:nth-child(1) {
+    width: 800px; /* Largura da forma */
+    height: 800px; /* Altura da forma */
+    bottom: 80%; /* Colocando a forma no fundo, 80% da altura da tela */
+    right: 70%; /* Colocando a forma à direita */
+}
+
+/* Estilo para a segunda forma geométrica */
+.shape:nth-child(2) {
+    width: 800px; /* Largura da forma */
+    height: 800px; /* Altura da forma */
+    top: 90%; /* Colocando a forma quase no final da tela */
+    left: 80%; /* Colocando a forma à esquerda */
+}
+
+/* Estilo para a terceira forma geométrica */
+.shape:nth-child(3) {
+    width: 240px; /* Largura da forma */
+    height: 240px; /* Altura da forma */
+    top: 20%; /* Colocando a forma no topo da tela */
+    left: 82%; /* Colocando a forma à direita */
+}
+
+/* Estilo para a quarta forma geométrica */
+.shape:nth-child(4) {
+    width: 220px; /* Largura da forma */
+    height: 220px; /* Altura da forma */
+    top: 80%; /* Colocando a forma no fundo da tela */
+    left: 1%; /* Colocando a forma à esquerda */
+}
+
+/* Estilo para a quinta forma geométrica */
+.shape:nth-child(5) {
+    width: 120px; /* Largura da forma */
+    height: 120px; /* Altura da forma */
+    top: 2%; /* Colocando a forma no topo da tela */
+    left: 43%; /* Colocando a forma no centro da tela */
+}
+
+/* Estilo para a sexta forma geométrica */
+.shape:nth-child(6) {
+    width: 80px; /* Largura da forma */
+    height: 80px; /* Altura da forma */
+    top: 80%; /* Colocando a forma no fundo da tela */
+    left: 35%; /* Colocando a forma à esquerda */
+}
+
+/* Estilo para a sétima forma geométrica */
+.shape:nth-child(7) {
+    width: 150px; /* Largura da forma */
+    height: 150px; /* Altura da forma */
+    top: 80%; /* Colocando a forma no fundo da tela */
+    left: 60%; /* Colocando a forma à direita */
+}
